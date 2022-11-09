@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import img from "../../assets/images/login/login.svg";
+import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
 
-    const handleLogin = event =>{
-        event.preventDefault();
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
 
-    }
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((e) => console.error(e));
+  };
 
   return (
     <div className="hero w-full my-20">
       <div className="hero-content grid gap-10 md:grid-cols-2 flex-col lg:flex-row">
-
         <div className="text-center lg:text-left">
           <img className="w-4/5" src={img} alt="" />
         </div>
@@ -54,8 +64,11 @@ const Login = () => {
               <input className="btn btn-primary" type="submit" value="Login" />
             </div>
           </form>
-          <p className="text-center mb-8">New to Genius Car?
-              <Link className="text-orange-500 text-bold" to='/signup'>Sign Up</Link>
+          <p className="text-center mb-8">
+            New to Genius Car?
+            <Link className="text-orange-500 text-bold" to="/signup">
+              Sign Up
+            </Link>
           </p>
         </div>
       </div>

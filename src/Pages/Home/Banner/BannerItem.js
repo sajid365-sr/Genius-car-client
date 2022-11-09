@@ -20,8 +20,8 @@ const BannerItem = ({ slide }) => {
           have suffered alteration in some form
         </p>
         <div className="mt-10">
-          <button className="btn btn-outline btn-warning mr-5">Warning</button>
-          <button className="btn btn-outline btn-warning">Warning</button>
+          <button className="btn btn-warning mr-5">Discover More</button>
+          <button className="btn btn-outline btn-warning">Latest Project</button>
         </div>
       </div>
 
