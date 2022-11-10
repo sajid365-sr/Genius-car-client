@@ -17,7 +17,7 @@ const handlePlaceOrder = (event) =>{
     const phone = form.phone.value;
     const message = form.message.value;
 
-    console.log(name,phone,message)
+
 
     const order = {
         service: _id,
@@ -43,7 +43,7 @@ const handlePlaceOrder = (event) =>{
             form.reset();
             alert('Order placed successfully.')
         }
-        console.log(data)})
+        })
     .catch(e => console.error(e))
 
 }

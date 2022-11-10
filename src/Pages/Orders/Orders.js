@@ -50,7 +50,7 @@ const Orders = () => {
         const newOrders = [approved,...remaining];
         setOrder(newOrders);
       }
-      console.log(data)
+      
     })
 
   }
