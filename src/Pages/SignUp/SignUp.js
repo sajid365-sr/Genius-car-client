@@ -18,6 +18,7 @@ const SignUp = () => {
         .then( result => {
             const user = result.user;
             console.log(user);
+            form.reset();
         })
         .catch(e => console.error(e))
 
@@ -72,7 +73,7 @@ const SignUp = () => {
             
             </div>
             <div className="form-control mt-6">
-              <input className="btn btn-primary" type="submit" value="Login" />
+              <input className="btn btn-primary" type="submit" value="SignUp" />
             </div>
           </form>
           <p className="text-center mb-8">Already have an account?
