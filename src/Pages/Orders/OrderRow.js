@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-const OrderRow = ({ order }) => {
-  const { serviceName, price, service, customer, phone } = order;
+const OrderRow = ({ order, handleDelete }) => {
+  const { serviceName, price, service, message, customer, phone, _id } = order;
   const [orderService, setOrderService] = useState([]);
 
   useEffect(() => {
@@ -10,10 +10,13 @@ const OrderRow = ({ order }) => {
       .then((data) => setOrderService(data));
   }, [service]);
 
+
+ 
+
   return (
     <tr>
       <th>
-        <button className="btn btn-circle btn-outline">
+        <button onClick={()=> handleDelete(_id, serviceName)} className="btn btn-circle btn-outline">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -50,7 +53,7 @@ const OrderRow = ({ order }) => {
       </td>
       <td>Purple</td>
       <th>
-        <button className="btn btn-ghost btn-xs">details</button>
+        <span className="font-normal">{message}</span>
       </th>
     </tr>
   );

@@ -7,10 +7,29 @@ const Orders = () => {
   const [orders, setOrder] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orders?email=${user.email}`)
+    fetch(`http://localhost:5000/orders?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => setOrder(data));
   }, [user?.email]);
+
+
+  const handleDelete = (id, serviceName) =>{
+    const proceed = window.confirm(`Are you sure you want to cancel our ${serviceName} service`);
+    if(proceed){
+        fetch(`http://localhost:5000/orders/${id}`, {
+            method:'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.deletedCount){
+                alert('Service order cancelled.')
+            }
+        })
+        const remainingOrders = orders.filter(order => order._id !== id);
+        setOrder(remainingOrders);
+        
+    }
+  }
 
   return (
     <div className="overflow-x-auto w-full my-12">
@@ -23,7 +42,7 @@ const Orders = () => {
               </label>
             </th>
             <th>Name</th>
-            <th>Job</th>
+            <th>Services</th>
             <th>Favorite Color</th>
             <th>Message</th>
           </tr>
@@ -33,6 +52,7 @@ const Orders = () => {
               orders.map(order => <OrderRow
               key={order._id}
               order={order}
+              handleDelete={handleDelete}
               ></OrderRow>)
           }
         </tbody>
