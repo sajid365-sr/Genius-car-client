@@ -23,6 +23,7 @@ const signIn = (email, password) =>{
 }
 
 const logOut = () =>{
+    localStorage.removeItem('Genius-Token');
     return signOut(auth);
 }
 

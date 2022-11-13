@@ -34,6 +34,7 @@ const handlePlaceOrder = (event) =>{
         method:'POST',
         headers:{
             'content-type': 'application/json',
+            authorization:`Bearer ${localStorage.getItem('Genius-Token')}`
         },
         body: JSON.stringify(order)
     })
@@ -41,12 +42,17 @@ const handlePlaceOrder = (event) =>{
     .then(data => {
         if(data.acknowledged){
             form.reset();
-            alert('Order placed successfully.')
+            alert('Order placed successfully.');
+            
         }
         })
     .catch(e => console.error(e))
 
+  
+
 }
+
+
 
   return (
     <form onSubmit={handlePlaceOrder} className="my-12">

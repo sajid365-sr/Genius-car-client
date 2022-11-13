@@ -1,28 +1,45 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import logo from '../../../assets/logo.svg'
+import logo from "../../../assets/logo.svg";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 
 const Header = () => {
-  const {user, logOut} = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((e) => console.error(e));
+  };
 
-  
+  const menuItems = (
+    <>
+      <Link className="font-semibold" to="/">
+        <button className="btn btn-ghost"> Home</button>
+      </Link>
 
-    const menuItems = <>
-    <li className="mr-5"><Link className="font-semibold" to='/'>Home</Link></li>
-    
-     {
-        user?.email ? 
+      {user?.email ? (
         <>
-        <li><Link className="font-semibold" to='/orders'>Inventory</Link></li>
-        <li onClick={logOut}><Link className="font-semibold" to='/login'>Logout</Link></li>
+          
+            <Link className="font-semibold" to="/orders">
+              <button className="btn btn-ghost">Inventory</button>
+            </Link>
+          
+          
+            <Link onClick={handleLogOut} className="font-semibold" to="/login">
+            <button className="btn btn-ghost">Logout</button>
+            </Link>
+          
         </>
-        :
-        <li><Link className="font-semibold" to='/login'>Login</Link></li>
-      
-     }
+      ) : (
+        
+          <Link className="font-semibold" to="/login">
+            <button className="btn btn-ghost">Login</button>
+          </Link>
+        
+      )}
     </>
+  );
 
   return (
     <div className="navbar h-20 pt-8 mb-8 bg-base-100">
@@ -49,21 +66,17 @@ const Header = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             {menuItems}
-
           </ul>
         </div>
-        <Link to='/' className="w-24 h-20">
-            <img src={logo} alt="" />
+        <Link to="/" className="w-24 h-20">
+          <img src={logo} alt="" />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal p-0">
-          
-        {menuItems}
-        </ul>
+        <ul className="menu menu-horizontal p-0">{menuItems}</ul>
       </div>
       <div className="navbar-end">
-      <button className="btn btn-outline btn-error">Appointment</button>
+        <button className="btn btn-outline btn-error">Appointment</button>
       </div>
     </div>
   );

@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from "../../assets/images/login/login.svg";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, loading } = useContext(AuthContext);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate();
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -15,6 +18,29 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         const user = result.user;
+        const currentUser = {
+          email: user.email,
+        };
+        
+
+        //get jwt token
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(currentUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            
+
+            // Local storage is the easiest but not the best way to store JWT token. More secure is HTTP only cookie.
+
+            localStorage.setItem("Genius-Token", data.token);
+            navigate(from, {replace:true});
+          });
+
         
         form.reset();
       })
