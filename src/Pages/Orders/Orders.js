@@ -8,7 +8,7 @@ const Orders = () => {
   
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orders?email=${user?.email}`,{
+    fetch(`${process.env.REACT_APP_SERVER_URL}/orders?email=${user?.email}`,{
       headers:{
         authorization:`Bearer ${localStorage.getItem('Genius-Token')}`
       }
@@ -30,7 +30,7 @@ const Orders = () => {
   const handleDelete = (id, serviceName) =>{
     const proceed = window.confirm(`Are you sure you want to cancel our ${serviceName} service`);
     if(proceed){
-        fetch(`http://localhost:5000/orders/${id}`, {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/orders/${id}`, {
             method:'DELETE',
             headers:{
               authorization:`Bearer ${localStorage.getItem('Genius-Token')}`

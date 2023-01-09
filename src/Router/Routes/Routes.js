@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         element: <PrivateRoute>
           <CheckOut></CheckOut>
         </PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`)
+        loader: ({ params }) => fetch(`${process.env.REACT_APP_SERVER_URL}/services/${params.id}`)
       },
       {
         path: '/orders',

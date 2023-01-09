@@ -11,7 +11,7 @@ const PaymentSuccess = () => {
 
     const [order, setOrder] = useState({});
     useEffect(() => {
-        fetch(`http://localhost:5000/orders/${transactionId}`)
+        fetch(`${process.env.REACT_APP_SERVER_URL}/orders/${transactionId}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);

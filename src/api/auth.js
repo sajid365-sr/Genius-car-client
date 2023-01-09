@@ -6,7 +6,7 @@ export const setAuthToken = (user) =>{
     }
     
     //get jwt token
-    fetch("http://localhost:5000/jwt", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/jwt`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

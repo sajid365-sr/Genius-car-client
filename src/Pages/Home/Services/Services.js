@@ -14,7 +14,7 @@ const Services = () => {
     }
 
     useEffect( () =>{
-        fetch(`http://localhost:5000/services?search=${search}&order=${isAsc? 'asc' : 'desc'}`)
+        fetch(`${process.env.REACT_APP_SERVER_URL}/services?search=${search}&order=${isAsc? 'asc' : 'desc'}`)
         .then(res => res.json())
         .then(data => setServices(data))
     }, [isAsc,search]);

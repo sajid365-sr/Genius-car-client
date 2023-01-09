@@ -30,7 +30,7 @@ const CheckOut = () => {
       
     };
 
-    fetch(`http://localhost:5000/orders`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/orders`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
