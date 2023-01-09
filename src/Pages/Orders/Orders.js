@@ -48,29 +48,6 @@ const Orders = () => {
     }
   }
 
-  const handleStatusUpdate = id =>{
-    fetch(`http://localhost:5000/orders/${id}`, {
-      method:'PATCH',
-      headers:{
-        'content-type': 'application/json',
-        authorization:`Bearer ${localStorage.getItem('Genius-Token')}`
-      },
-      body: JSON.stringify({status: 'Approved'})
-    })
-    .then(res => res.json())
-    .then(data => {
-      if(data.modifiedCount > 0){
-        const remaining = orders.filter(order => order._id !== id);
-        const approved = orders.find(odr => odr._id === id);
-        approved.status = 'Approved';
-
-        const newOrders = [approved,...remaining];
-        setOrder(newOrders);
-      }
-      
-    })
-
-  }
 
   return (
     <div className="overflow-x-auto w-full my-12">
@@ -78,20 +55,21 @@ const Orders = () => {
       <table className="table w-full">
         <thead>
           <tr>
+            <th>Index</th>
             <th></th>
-            <th>Name</th>
-            <th>Services</th>
-            <th>Message</th>
+            <th>Customer Info</th>
+            <th>Services Info</th>
+            <th>Transaction Query</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {
-              orders.map(order => <OrderRow
+              orders.map((order, i) => <OrderRow
               key={order._id}
               order={order}
               handleDelete={handleDelete}
-              handleStatusUpdate={handleStatusUpdate}
+              index={i + 1}
               ></OrderRow>)
           }
         </tbody>

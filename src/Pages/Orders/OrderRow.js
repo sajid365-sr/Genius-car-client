@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
 
-const OrderRow = ({ order, handleDelete, handleStatusUpdate }) => {
-  const { serviceName, price, service, message, customer, phone, _id, status } = order;
+const OrderRow = ({ order, handleDelete, index }) => {
+  const { serviceName, price, serviceId, address, customerName, phone, _id, paidAt, transactionId, paid } = order;
   const [orderService, setOrderService] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/services/${service}`)
+    fetch(`http://localhost:5000/services/${serviceId}`)
       .then((res) => res.json())
       .then((data) => setOrderService(data));
-  }, [service]);
+  }, [serviceId]);
 
 
- 
+
 
   return (
     <tr>
       <th>
-        <button onClick={()=> handleDelete(_id, serviceName)} className="btn btn-circle btn-outline">
+        <button>{index}</button>
+      </th>
+      <th>
+        <button title="Delete order" onClick={() => handleDelete(_id, serviceName)} className="btn btn-circle btn-outline">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -41,25 +44,26 @@ const OrderRow = ({ order, handleDelete, handleStatusUpdate }) => {
             </div>
           </div>
           <div>
-            <div className="font-bold text-xl">{customer}</div>
-            <div className="text-lg opacity-50 ">{phone}</div>
+            <p className="font-semibold text-lg">Customer Name: {customerName}</p>
+            <p className="text-gray-500 font-medium">Phone: {phone}</p>
+            <p className="text-gray-500 font-medium">Address: {address}</p>
           </div>
         </div>
       </td>
       <td>
-        {serviceName}
-        <br />
-        <span className="badge badge-ghost badge-lg">${price}</span>
+        <p className="text-lg font-semibold mb-3">{serviceName}</p>
+        <p className="text-2xl px-5 badge badge-lg">${price}</p>
       </td>
-      
+
       <th>
-        <span className="font-normal">{message}</span>
+        <p className="font-normal">Transaction ID: <span className="font-medium">{transactionId}</span></p>
+        <p className="font-normal">Payment Time: <span className="font-medium">{paidAt}</span> </p>
       </th>
       <th>
-          <button onClick={() => handleStatusUpdate(_id)} className="btn btn-outline btn-sm">{status ? status : "Pending"}</button>
+        <p className="text-success text-2xl font-semibold">{paid && "paid"}</p>
 
       </th>
-     
+
     </tr>
   );
 };
