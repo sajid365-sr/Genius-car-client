@@ -4,7 +4,7 @@ import logo from '../../../assets/logo.svg'
 
 const Footer = () => {
     return (
-        <footer className="footer bg-black text-slate-300 p-32">
+        <footer className="footer bg-black text-slate-300 p-32 print:hidden">
         <div>
             <img src={logo} alt="" />
           <p>ACME Industries Ltd.<br/>Providing reliable tech since 1992</p>

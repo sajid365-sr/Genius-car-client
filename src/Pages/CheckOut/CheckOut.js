@@ -4,7 +4,7 @@ import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 const CheckOut = () => {
   const { user } = useContext(AuthContext);
-  const { title, price, _id } = useLoaderData();
+  const { title, price, _id, img } = useLoaderData();
 
   const handlePlaceOrder = (event) => {
     event.preventDefault();
@@ -14,19 +14,23 @@ const CheckOut = () => {
     const name = firstName + " " + lastName;
     const email = user?.email || "Unregistered";
     const phone = form.phone.value;
-    const message = form.message.value;
+    const address = form.address.value;
+    const currency = form.currency.value;
+    const postcode = form.postcode.value;
 
     const order = {
-      service: _id,
+      serviceId: _id,
       serviceName: title,
-      price,
-      customer: name,
+      customerName: name,
       email,
       phone,
-      message,
+      address,
+      currency,
+      postcode,
+      
     };
 
-    fetch(`https://genius-car-server-swart-two.vercel.app/orders`, {
+    fetch(`http://localhost:5000/orders`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -36,56 +40,74 @@ const CheckOut = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.acknowledged) {
-          form.reset();
-          alert("Order placed successfully.");
-        }
+        window.location.replace(data.url);
       })
       .catch((e) => console.error(e));
   };
 
   return (
-    <form onSubmit={handlePlaceOrder} className="my-12">
-      <h2 className="text-4xl">{title}</h2>
-      <h4 className="text-3xl mb-8">You are about to order: {price}</h4>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <input
-          type="text"
-          placeholder="First Name"
-          className="input input-bordered w-full"
-          name="firstName"
-          required
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          className="input input-bordered w-full"
-          name="lastName"
-          required
-        />
-        <input
-          type="number"
-          placeholder="Your Phone"
-          className="input input-bordered w-full"
-          name="phone"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Your Email"
-          defaultValue={user?.email}
-          className="input input-bordered w-full"
-          name="email"
-          readOnly
-        />
+    <form
+      onSubmit={handlePlaceOrder}
+      className="my-12 flex items-center justify-between"
+    >
+      <div>
+        <h2 className="text-4xl">{title}</h2>
+        <h4 className="text-3xl mb-8">You are about to order: {price}</h4>
+        <img className="rounded" src={img} alt="" />
       </div>
-      <textarea
-        name="message"
-        className="textarea textarea-bordered w-full h-24 mt-8"
-        placeholder="Your Message"
-      ></textarea>
-      <input type="submit" className="btn mt-5" value="Place your order" />
+      <div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <input
+            type="text"
+            placeholder="First Name"
+            className="input input-bordered w-full"
+            name="firstName"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            className="input input-bordered w-full"
+            name="lastName"
+            required
+          />
+          <input
+            type="number"
+            placeholder="Your Phone"
+            className="input input-bordered w-full"
+            name="phone"
+            required
+          />
+          <input
+            type="email"
+            placeholder="Your Email"
+            defaultValue={user?.email}
+            className="input input-bordered w-full"
+            name="email"
+            readOnly
+          />
+          <select
+            defaultValue="BDT"
+            name="currency"
+            className="select select-bordered w-full max-w-xs"
+          >
+            <option value="BDT">BDT</option>
+            <option value="USD">USD</option>
+          </select>
+          <input
+            className="input input-bordered w-full"
+            type="text"
+            name="postcode"
+            placeholder="Your post code"
+          />
+        </div>
+        <textarea
+          name="address"
+          className="textarea textarea-bordered w-full h-24 mt-8"
+          placeholder="Your Address"
+        ></textarea>
+        <input type="submit" className="btn mt-5 w-full text-xl" value="Pay" />
+      </div>
     </form>
   );
 };
