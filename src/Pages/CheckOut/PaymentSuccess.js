@@ -19,6 +19,11 @@ const PaymentSuccess = () => {
             })
     }, [transactionId])
 
+    if (!order._id) {
+        return <div>
+            <h1 className='text-3xl my-10 font-semibold'>No order found</h1>
+        </div>
+    }
     return (
         <div>
             <h2 className='text-success'>Congrats! Successfully paid.</h2>
@@ -49,7 +54,7 @@ const PaymentSuccess = () => {
 
                     </tbody>
                 </table>
-                <button onClick={()=> window.print()} className='btn btn-primary rounded-none px-10 text-lg mt-5 print:hidden'>Print</button>
+                <button onClick={() => window.print()} className='btn btn-primary rounded-none px-10 text-lg mt-5 print:hidden'>Print</button>
             </div>
         </div>
     );

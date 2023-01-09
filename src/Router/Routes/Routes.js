@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../../Layout/Main";
 import CheckOut from "../../Pages/CheckOut/CheckOut";
+import PaymentFail from "../../Pages/CheckOut/PaymentFail";
 import PaymentSuccess from "../../Pages/CheckOut/PaymentSuccess";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
@@ -42,6 +43,12 @@ const router = createBrowserRouter([
         path: '/payment/success',
         element: <PrivateRoute>
           <PaymentSuccess></PaymentSuccess>
+        </PrivateRoute>
+      },
+      {
+        path: '/payment/fail',
+        element: <PrivateRoute>
+          <PaymentFail></PaymentFail>
         </PrivateRoute>
       },
     ]

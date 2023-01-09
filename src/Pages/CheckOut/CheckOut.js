@@ -90,6 +90,7 @@ const CheckOut = () => {
             defaultValue="BDT"
             name="currency"
             className="select select-bordered w-full max-w-xs"
+            required
           >
             <option value="BDT">BDT</option>
             <option value="USD">USD</option>
@@ -99,12 +100,14 @@ const CheckOut = () => {
             type="text"
             name="postcode"
             placeholder="Your post code"
+            required
           />
         </div>
         <textarea
           name="address"
           className="textarea textarea-bordered w-full h-24 mt-8"
           placeholder="Your Address"
+          required
         ></textarea>
         <input type="submit" className="btn mt-5 w-full text-xl" value="Pay" />
       </div>
